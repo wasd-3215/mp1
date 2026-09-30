@@ -80,8 +80,16 @@ def main():
         or float(config.get("resid_dropout", 0.0)) > 0.0
         or float(config.get("embedding_dropout", 0.0)) > 0.0
     )
-    if dropout_requested and args.implementation != "combined_model_dropout":
-        parser.error("nonzero dropout requires --implementation combined_model_dropout")
+    # if dropout_requested and args.implementation != "combined_model_dropout":
+    #     parser.error("nonzero dropout requires --implementation combined_model_dropout")
+    dropout_implementations = {
+        "combined_model_dropout",
+        "shared_model_dropout",
+        "hybrid_model_dropout",
+    }
+    if dropout_requested and args.implementation not in dropout_implementations:
+        parser.error("nonzero dropout requires a dropout-capable implementation")
+
     model, implementation_sha = make_model(args.implementation, config, device)
     args.run_dir.mkdir(parents=True, exist_ok=True)
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.max_lr,
