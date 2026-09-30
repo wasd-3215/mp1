@@ -1,0 +1,21 @@
+{
+  "name": "lr0012-wd03-dropout015-19200",
+  "run_group": "capacity/width256-depth4",
+  "implementation": "models.full_attention_dropout",
+  "architecture": "configs/architectures/width256_depth4_mha4.json",
+  "runtime": {
+    "device": "cuda",
+    "precision": "auto",
+    "threads": 4
+  },
+  "training": {
+    "seed": 71,
+    "steps": 19200,
+    "batch_size": 32,
+    "eval_every": 300,
+    "max_lr": 0.0012,
+    "warmup_steps": 100,
+    "min_lr_ratio": 0.01,
+    "weight_decay": 0.3
+  }
+}

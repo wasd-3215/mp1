@@ -13,23 +13,14 @@ directories are unchanged. All modules keep the benchmark context and
 | `lecture_attention_models.dsa` | Learned low-dimensional top-k indexer followed by causal attention. | Dense reference implementation for the 256-token task; top-k does not currently save runtime. |
 | `lecture_attention_models.gated_delta_hybrid` | Gated-delta recurrence in all but the final exact-attention block. | Resets recurrent state for every independent evaluation window. |
 
-Run from `code/` and use a different run directory for every model. Example:
+Run from `code/` using `trainer/train_experiment.py` and a copied profile under
+`configs/experiments/`. Set the profile's `implementation` to the desired
+module, point `architecture` at an architecture JSON, and retain a distinct
+profile name for each model. The trainer creates a hierarchical run directory.
 
-```bash
-python train.py --implementation lecture_attention_models.gqa --device cpu --threads 4 --seed 17 --eval-every 300 --run-dir runs/myruns/lecture/gqa
-python evaluate.py --checkpoint runs/myruns/lecture/gqa/checkpoint.pt --device cpu --precision fp32 --split validation --output runs/myruns/lecture/gqa/validation.json
-```
-
-Replace the module and path suffix with `mqa`, `gated`, `dsa`, or
-`gated_delta_hybrid` to compare the other candidates. For the hybrid, the
-output directory suffix can be `gated-delta-hybrid`.
-
-Select settings and checkpoints using validation BPB. After freezing the final
-method, evaluate its test score in FP32 on CPU:
-
-```bash
-python evaluate.py --checkpoint runs/myruns/lecture/gated-delta-hybrid/checkpoint.pt --device cpu --precision fp32 --split test --output runs/myruns/lecture/gated-delta-hybrid/test.json
-```
+After training, evaluate checkpoints with the supplied `evaluate.py`.
+Select settings with validation BPB; use the test split only for the frozen
+final method.
 
 The DSA variant uses a dense score/index matrix because the benchmark window is
 short and PyTorch's standard SDPA interface does not provide the lecture's

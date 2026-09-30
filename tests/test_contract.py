@@ -1,8 +1,8 @@
 """Run: python -m unittest discover -s tests -v (CPU; no dataset download)."""
 import unittest
 import torch
-from common import windows
-from MP1_student_starter.code.swiglu_impl import build_model
+from MP1_student_starter.code.common import windows
+from MP1_student_starter.code.models.swiglu_impl import build_model
 
 
 class ContractTests(unittest.TestCase):

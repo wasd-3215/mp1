@@ -1,0 +1,21 @@
+{
+  "name": "2attn2conv-wd04-dropout015-lr0015-19200",
+  "run_group": "hybrid/width288-depth4",
+  "implementation": "models.hybrid_dropout",
+  "architecture": "configs/architectures/width288_depth4_hybrid2attn2conv_dropout015.json",
+  "runtime": {
+    "device": "cuda",
+    "precision": "auto",
+    "threads": 4
+  },
+  "training": {
+    "seed": 71,
+    "steps": 19200,
+    "batch_size": 32,
+    "eval_every": 300,
+    "max_lr": 0.0015,
+    "warmup_steps": 100,
+    "min_lr_ratio": 0.01,
+    "weight_decay": 0.4
+  }
+}

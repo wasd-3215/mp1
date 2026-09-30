@@ -1,9 +1,7 @@
-"""Compact GPT combining Pre-RMSNorm, RoPE, GQA, SwiGLU, and bias-free linears.
+"""Shared building blocks for the config-driven GPT implementations.
 
-Select this implementation from ``code/`` with:
-    python train.py --implementation combined_model --run-dir runs/myruns/combined
-
-The public model interface matches the supplied trainer and evaluator.
+The primary full-attention model is exposed by ``full_attention_dropout``;
+this module also retains the no-dropout compatibility model and core layers.
 """
 import math
 
@@ -174,5 +172,5 @@ class CombinedGPT(nn.Module):
 
 
 def build_model(config):
-    """Factory loaded by train.py/evaluate.py for --implementation combined_model."""
+    """Factory for the legacy no-dropout model interface."""
     return CombinedGPT(config)
